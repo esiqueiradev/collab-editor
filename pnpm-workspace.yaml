@@ -1,0 +1,12 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+allowBuilds:
+  '@biomejs/biome': true
+  sharp: true
+  unrs-resolver: true
+  prisma: true
+  '@prisma/client': true
+  esbuild: true
+  leveldown: true
