@@ -10,3 +10,4 @@ allowBuilds:
   '@prisma/client': true
   esbuild: true
   leveldown: true
+  '@prisma/engines': true

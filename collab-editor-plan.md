@@ -12,7 +12,7 @@ Demonstrates: CRDT-based real-time sync, WebSockets at scale, multi-tenant auth,
 - Sync: Yjs + y-websocket
 - Editor UI: Tiptap v2 (ProseMirror-based)
 - Auth: NextAuth.js — email/password + Google + GitHub OAuth
-- DB: Postgres via Prisma ORM
+- DB: Postgres via Prisma ORM v7 (config in `prisma.config.ts`, client output to `app/generated/prisma`)
 - Cache/Pub-Sub: Redis (for multi-instance WebSocket scaling)
 - Monorepo: pnpm v11 workspaces
 - Linting/Formatting: Biome (replaces ESLint + Prettier)
@@ -58,12 +58,12 @@ When multiple ws-server instances run (horizontal scaling), Redis pub/sub
 - [x] Write `.env.example` with all required variables
 - [x] Add `.gitignore` (node_modules, .next, dist, .env, editors, OS files)
 
-### Phase 2 — Database Schema (Prisma)
-- [ ] Install Prisma in `apps/web`
-- [ ] Write schema: `User`, `Document`, `DocumentCollaborator`, `DocumentSnapshot`, `Role` enum
-- [ ] Add NextAuth required models: `Account`, `Session`, `VerificationToken`
-- [ ] Run `prisma migrate dev` — confirm all tables created
-- [ ] Run `prisma generate` — confirm Prisma Client works
+### Phase 2 — Database Schema (Prisma) ✅
+- [x] Install Prisma in `apps/web` (Prisma v7 — uses `prisma.config.ts` + `dotenv`)
+- [x] Write schema: `User`, `Document`, `DocumentCollaborator`, `DocumentSnapshot`, `Role` enum
+- [x] Add NextAuth required models: `Account`, `Session`, `VerificationToken`
+- [x] Run `prisma migrate dev --name init` — all 7 tables created in postgres
+- [x] Run `prisma generate` — client output to `apps/web/app/generated/prisma`
 
 ### Phase 3 — Authentication (NextAuth.js v5)
 - [ ] Install `next-auth@beta` + `@auth/prisma-adapter`

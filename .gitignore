@@ -14,8 +14,7 @@ out/
 .env.*.local
 
 # Prisma
-prisma/migrations/dev/
-apps/web/prisma/generated/
+apps/web/app/generated/
 
 # Logs
 *.log
