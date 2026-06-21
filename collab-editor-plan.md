@@ -65,17 +65,32 @@ When multiple ws-server instances run (horizontal scaling), Redis pub/sub
 - [x] Run `prisma migrate dev --name init` — all 7 tables created in postgres
 - [x] Run `prisma generate` — client output to `apps/web/app/generated/prisma`
 
-### Phase 3 — Authentication (NextAuth.js v5)
-- [ ] Install `next-auth@beta` + `@auth/prisma-adapter`
-- [ ] Configure `CredentialsProvider` (email + bcrypt)
-- [ ] Configure `GoogleProvider`
-- [ ] Configure `GitHubProvider`
-- [ ] Write `middleware.ts` to protect `/dashboard` and `/doc/[id]`
-- [ ] Write `POST /api/auth/register` route (hash password, create User)
-- [ ] Extend NextAuth session type with `{ id, avatarUrl }`
-- [ ] Build `/login` page
-- [ ] Build `/register` page
-- [ ] Build `/` landing page with sign-in CTA
+### Phase 3 — Authentication (NextAuth.js v5) ✅
+- [x] Install `next-auth@beta` (5.0.0-beta.31) + `@auth/prisma-adapter` + `bcryptjs`
+- [x] Configure `CredentialsProvider` (email + bcrypt via `lib/auth-credentials.ts`)
+- [x] Configure `GoogleProvider`
+- [x] Configure `GitHubProvider`
+- [x] Split auth config: `auth.config.ts` (edge-safe, proxy only) + `auth.ts` (full, Node only)
+- [x] Write `proxy.ts` to protect `/dashboard` and `/doc/[id]` (Next.js 16 renamed middleware → proxy)
+- [x] Write `POST /api/auth/register` route (hash password, create User)
+- [x] Extend NextAuth session type with `{ id, avatarUrl }` in `types/next-auth.d.ts`
+- [x] Build `/login` page
+- [x] Build `/register` page with accessible `htmlFor`/`id` on all fields
+- [x] Build `/` landing page with sign-in CTA
+- [x] `lib/prisma.ts` singleton using `@prisma/adapter-pg` (Prisma 7 requires driver adapter)
+- [x] Pin `@prisma/client@^7.8.0` explicitly — fixes version mismatch with transitively resolved v6
+- [x] Add `serverExternalPackages` in `next.config.ts` for `@prisma/client`, `@prisma/adapter-pg`, `pg`
+
+### Phase 3 — Extra (beyond original plan)
+- [x] Vitest test suite (26 tests across 4 files)
+  - `__tests__/api/auth/register.test.ts` — 6 tests (validation, happy path, bcrypt, DB error)
+  - `__tests__/lib/auth-credentials.test.ts` — 6 tests (all credential verify paths)
+  - `__tests__/app/login.test.tsx` — 7 tests (render, submit, redirect, error, loading)
+  - `__tests__/app/register.test.tsx` — 7 tests (render, submit, server error, loading)
+- [x] Dark mode with `next-themes` + Tailwind v4 `@custom-variant dark`
+  - `components/theme-provider.tsx` — wraps `next-themes` with `attribute="class"`
+  - `components/theme-toggle.tsx` — sun/moon toggle, fixed top-right, hydration-safe
+  - All auth pages updated with `dark:` variants
 
 ### Phase 4 — Document REST API
 - [ ] `GET /api/documents` — list owned + collaborated documents
