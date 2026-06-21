@@ -8,13 +8,14 @@ Portfolio project to showcase senior full-stack skills for job interviews.
 Demonstrates: CRDT-based real-time sync, WebSockets at scale, multi-tenant auth, clean architecture.
 
 **Stack decisions:**
-- Frontend: Next.js 14 (App Router)
+- Frontend: Next.js 16 (App Router) — scaffolded via `pnpm create next-app`
 - Sync: Yjs + y-websocket
 - Editor UI: Tiptap v2 (ProseMirror-based)
 - Auth: NextAuth.js — email/password + Google + GitHub OAuth
 - DB: Postgres via Prisma ORM
 - Cache/Pub-Sub: Redis (for multi-instance WebSocket scaling)
-- Monorepo: pnpm workspaces
+- Monorepo: pnpm v11 workspaces
+- Linting/Formatting: Biome (replaces ESLint + Prettier)
 - Infra: Docker + Docker Compose + GitHub Actions CI
 
 ---
@@ -24,7 +25,7 @@ Demonstrates: CRDT-based real-time sync, WebSockets at scale, multi-tenant auth,
 ```
 collab-editor/
   apps/
-    web/          ← Next.js 14 (App Router) — UI + REST API routes
+    web/          ← Next.js 16 (App Router) — UI + REST API routes
     ws-server/    ← Standalone Node.js — y-websocket server
   packages/
     shared/       ← Shared TypeScript types (Document, User, etc.)
@@ -46,15 +47,16 @@ When multiple ws-server instances run (horizontal scaling), Redis pub/sub
 
 ## TODO — Progress Tracker
 
-### Phase 1 — Project Setup & Monorepo
-- [ ] Create repo and `pnpm-workspace.yaml`
-- [ ] Scaffold `apps/web` with `pnpm create next-app` (TypeScript, App Router, Tailwind)
-- [ ] Scaffold `apps/ws-server` (Node.js + TypeScript + tsx)
-- [ ] Create `packages/shared` with shared TypeScript types
-- [ ] Configure root `tsconfig.json` with path aliases for `packages/shared`
-- [ ] Set up ESLint + Prettier at root, extended by each app
-- [ ] Write `docker-compose.yml` (postgres + redis)
-- [ ] Write `.env.example` with all required variables
+### Phase 1 — Project Setup & Monorepo ✅
+- [x] Create repo and `pnpm-workspace.yaml`
+- [x] Scaffold `apps/web` with `pnpm create next-app` (TypeScript, App Router, Tailwind)
+- [x] Scaffold `apps/ws-server` (Node.js + TypeScript + tsx)
+- [x] Create `packages/shared` with shared TypeScript types
+- [x] Configure root `tsconfig.json` with path aliases for `packages/shared`
+- [x] Set up Biome at root (replaces ESLint + Prettier)
+- [x] Write `docker-compose.yml` (postgres:16 + redis:7)
+- [x] Write `.env.example` with all required variables
+- [x] Add `.gitignore` (node_modules, .next, dist, .env, editors, OS files)
 
 ### Phase 2 — Database Schema (Prisma)
 - [ ] Install Prisma in `apps/web`
